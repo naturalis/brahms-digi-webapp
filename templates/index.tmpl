@@ -1,0 +1,76 @@
+<html>
+	<head>
+		[% FOR stylesheet IN css %]
+			<link rel="stylesheet" href="[% stylesheet %]" type="text/css" />
+		[% END %]
+			<script type="text/javascript">
+				var tomatoIcon = '[% icons.tomato %]';
+			</script>
+			<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?sensor=false"></script>
+		[% FOR script IN js %]
+			<script src="[% script %]" type="text/javascript"></script>
+		[% END %]
+		<title>Naturalis accessions</title>
+	</head>
+	<body onload="enhance()">
+		<center>
+			<table>
+				<tr>
+					<td>
+						<div id="map_canvas"></div>	
+					</td>
+					<td>
+						<div class="column">
+							<img 
+								id="preview" 
+								src="[% splash %]" 
+								class="accession" 
+								onclick="window.open(this.src.replace(/png/g,'jpg'))"
+							/>
+						</div>
+					</td>
+				</tr>
+			</table>
+			<table class="column sortable" id="accessions">
+				<tr id="header">
+					<th class="barcode">Barcode</th>			
+					<th class="species">Species</th>
+					<th class="category">Category</th>
+					<th class="country">Country</th>					
+					<th class="year">Year</th>
+					<th class="surface">Cover</th>
+					<th class="georeference"><!-- Georeference --></th>					
+					<th class="source"><!-- Image --></th>
+				</tr>
+				[% FOR acc IN accessions %]
+				<tr id="[% acc.barcode %]" class="accession">
+					<td class="barcode">[% acc.barcode %]</td>
+					<td class="species">[% acc.species %]</td>
+					<td class="category">[% acc.category %]</td>
+					<td class="country">[% acc.country %]</td>
+					<td class="year">[% acc.year %]</td>					
+					<td class="surface">[% acc.surface %]</td>				
+					<td class="georeference">
+						[% IF acc.latdec != 0 AND acc.longdec %]				
+							<img 
+								src="[% icons.world %]" 
+								class="mapIcon" 
+								title="[% acc.latdec %],[% acc.longdec %]"
+								onclick="mapit('[% acc.barcode %]')"/>
+						[% END %]
+					</td>
+					<td class="source">
+						[% IF acc.src %]
+							<img 
+								src="[% icons.preview %]" 
+								class="previewIcon" 
+								onclick="$('preview').src='[% acc.src %]'"
+							/>
+						[% END %]
+					</td>
+				</tr>
+				[% END %]
+			</table>
+		</center>
+	</body>
+</html>

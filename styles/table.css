@@ -1,0 +1,42 @@
+/* Copyright 2006 Joost de Valk */
+a img {
+	border: 0;
+}
+
+table.sortable {
+//	width: 100%
+}
+
+table.sortable th, table.sortable td {
+	text-align: left;
+	padding: 2px 4px 2px 4px;
+}
+
+table.sortable th, table.sortable td {
+	background-color: #ccc;
+	width: 120px;
+}
+
+table.sortable .species {
+	width: 234px;
+}
+
+table.sortable .source, table.sortable .georeference {
+	width: 18px;
+}
+
+table.sortable td {
+}
+
+table.sortable tr.odd td {
+	background-color: #ddd;
+}
+
+table.sortable tr.even td {
+	background-color: #fff;
+}
+
+table.sortable tr.sortbottom td {
+	background-color: #ccc;
+	font-weight: bold;
+}

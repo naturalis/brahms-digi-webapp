@@ -1,0 +1,43 @@
+img.accession {
+	height: 400px;
+	width: 244px;
+}
+
+div#map_canvas {
+	width: 700px;
+	height: 400px;
+}
+
+a {
+	text-decoration: none;
+}
+
+body {
+	font-family: verdana, arial, sans serif;
+}
+
+table.column {
+	vertical-align: top;
+}
+
+td, th {
+	font-size: 12px;
+	vertical-align: top;
+}
+
+td.key {
+	font-weight: bold;
+	text-align: right;
+}
+
+td.species {
+	font-style: italic;
+}
+
+th {
+	text-align: left;
+}
+
+.column {
+	display: inline;
+}

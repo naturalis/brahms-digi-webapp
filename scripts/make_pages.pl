@@ -10,6 +10,7 @@ use Data::Dumper;
 use Getopt::Long;
 use Image::Magick; # image magick needs to be compiled to support $extension (i.e. --with-png, probably)
 use Bio::Phylo::Util::Logger;
+use SurfaceCalculator 'calc_surface';
 
 # process command line arguments
 my $extension = 'png';
@@ -169,45 +170,4 @@ sub make_relpath {
 	my $relpath = $reference->Path($path);
 	$log->debug("computed relative path from $ref to $path - $relpath");
 	return $relpath;
-}
-
-# computes the percentage of black pixels (to 2 decimal places)
-# for an image that will be processed to hard black/white
-sub calc_surface {
-	my $inpath = shift;
-	my $cwd = getcwd;
-	my $infile = "$cwd/$inpath";	
-	$log->debug("going to compute surface cover of $infile");
-	
-	# instantiate Image::Magick object (needs to be able to handle $extension!)
-	my $image = Image::Magick->new;
-	$image->Read($infile);
-	
-	# this makes the image hard black/white
-	$image->Posterize('levels' => 2);
-	
-	# this makes the pixels 0/1
-	$image->Set('monochrome' => 'true');
-
-	# compute dimensions
-	my $width = $image->Get('width');
-	my $height = $image->Get('height');
-
-	# iterate over all pixels
-	my ( $black, $total );
-	for my $y ( 1 .. $height ) {
-		for my $x ( 1 .. $width ) {
-			
-			# sample pixel at $x,$y
-			my @pixel = $image->GetPixel( 'y' => $y - 1, 'x' => $x - 1 );
-			
-			# compute average brightness, is either 0 or 1
-			my $mean = ( $pixel[0] + $pixel[1] + $pixel[2] + 0 ) / 3;
-			$black++ if $mean;
-			$total++;
-		}
-	}
-	
-	# return percentage of black pixels with two decimal points
-	return sprintf "%.2f", ( 100 - ( $black / $total ) * 100 );
 }
